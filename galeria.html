@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    
+    <title>Galeria | Alberto Teixeira Pinto & Filhos</title>
+    <meta name="description" content="Galeria de imagens - O autêntico Pão de Ló de Arouca húmido. Tradição secular desde 1840 em forno a lenha no Burgo.">
+    <meta name="keywords" content="Pão de Ló de Arouca, Alberto Teixeira Pinto, Galeria, Imagens, Doçaria Tradicional">
+    <meta name="author" content="Alberto Teixeira Pinto & Filhos">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&family=Montserrat:wght@300;400;600&family=Material+Symbols+Outlined:wght@100..700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#002347",
+                        "gold": "#c5a059",
+                        "gold-light": "#e2c28d",
+                        "surface": "#faf9f6",
+                        "secondary": "#506071",
+                    },
+                    fontFamily: {
+                        'display': ['Cormorant Garamond', 'serif'],
+                        'sans': ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+
+        // --- CONTROLO DO MENU LATERAL ---
+        function toggleMenu() {
+            const nav = document.getElementById('side-nav');
+            const overlay = document.getElementById('menu-overlay');
+            nav.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
+
+        function toggleSubmenu(id) {
+            const submenu = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            submenu.classList.toggle('hidden');
+            if(icon) icon.classList.toggle('rotate-180');
+        }
+
+        function showPage(id) {
+            if(id === 'home') {
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+    
+    <style>
+        #side-nav {
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .font-display { font-family: 'Cormorant Garamond', serif; }
+        .font-sans { font-family: 'Montserrat', sans-serif; }
+        
+        /* Estilo para garantir que o botão de fechar apareça bem */
+        .lb-data .lb-close {
+            background-color: #c5a059 !important;
+            opacity: 1 !important;
+            border-radius: 50%;
+            margin-top: 10px;
+        }
+        .lb-outerContainer { background-color: white !important; border-radius: 15px; }
+    </style>
+</head>
+
+<body class="bg-surface text-primary font-sans antialiased">
+
+    <div id="menu-overlay" onclick="toggleMenu()" class="fixed inset-0 bg-primary/40 backdrop-blur-sm z-[150] hidden"></div>
+
+    <header class="fixed inset-x-0 top-0 z-[100] bg-primary border-b border-gold/20 h-auto py-2">
+        <nav class="container mx-auto px-6 flex flex-wrap justify-between items-center gap-2">
+            <button onclick="toggleMenu()" class="text-gold-light flex items-center gap-2 group">
+                <span class="material-symbols-outlined text-3xl group-hover:scale-110 transition-transform">menu</span>
+                <span class="text-[9px] uppercase tracking-[0.3em] font-bold hidden md:block">Menu</span>
+            </button>
+
+            <div class="flex flex-col items-center justify-center gap-1 cursor-pointer text-center md:flex-row md:text-left md:gap-3" onclick="showPage('home')">
+                <img src="logotipo.jpg" class="w-8 h-8 md:w-12 md:h-12 rounded-full border-2 border-gold/50 object-cover">
+                <div class="flex flex-col items-center md:items-start">
+                    <h1 class="font-display italic text-white text-sm md:text-2xl leading-tight tracking-tight">Alberto Teixeira Pinto & Filhos</h1>
+                    <span class="text-[7px] md:text-[9px] uppercase tracking-[0.3em] text-gold-light font-bold">Arouca • 1840</span>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-1">
+                <a href="mailto:alberto.t.pinto@gmail.com" class="text-white p-1.5 hover:text-gold-light transition-colors cursor-pointer"><span class="material-symbols-outlined text-2xl">mail</span></a>
+                <a href="tel:+351256944115" class="text-white p-1.5 hover:text-gold-light transition-colors cursor-pointer"><span class="material-symbols-outlined text-2xl">call</span></a>
+            </div>
+        </nav>
+    </header>
+
+    <div id="side-nav" class="fixed inset-y-0 left-0 w-full md:w-[400px] bg-primary z-[200] -translate-x-full p-12 flex flex-col shadow-2xl overflow-y-auto">
+        <button onclick="toggleMenu()" class="self-end text-gold-light mb-12 hover:rotate-90 transition-transform">
+            <span class="material-symbols-outlined text-4xl">close</span>
+        </button>
+
+        <nav class="flex flex-col gap-10">
+            <div class="border-b border-white/10 pb-6">
+                <button onclick="toggleSubmenu('sub-quem-somos')" class="w-full flex justify-between items-center group">
+                    <span class="font-display text-4xl text-white italic group-hover:text-gold transition-colors">
+                        Início</span>
+                    <span id="icon-sub-quem-somos" class="material-symbols-outlined text-gold transition-transform">
+                        expand_more</span>
+                </button>
+                <div id="sub-quem-somos" class="hidden flex flex-col gap-5 mt-6 pl-6 border-l border-gold/30">
+                    <a href="index.html#quem-somos" class="text-left text-white/50 hover:text-gold uppercase text-[10px] tracking-widest transition-colors">
+                        Quem Somos</a>
+                    <a href="index.html#insta" class="text-left text-white/50 hover:text-gold uppercase text-[10px] tracking-widest transition-colors">
+                        Instalações</a>
+                    <a href="index.html#historia" class="text-left text-white/50 hover:text-gold uppercase text-[10px] tracking-widest transition-colors">
+                        História</a>
+                    <a href="index.html#produtos" class="text-left text-white/50 hover:text-gold uppercase text-[10px] tracking-widest transition-colors">
+                        Produtos</a>
+                </div>
+            </div>
+
+            <a href="galeria.html" class="text-left font-display text-4xl text-white italic hover:text-gold transition-colors">
+                Galeria</a>
+            <a href="index.html#video" class="text-left font-display text-4xl text-white italic hover:text-gold transition-colors">
+                O Fabrico</a>
+            <a href="index.html#testemunhos" class="text-left font-display text-4xl text-white italic hover:text-gold transition-colors">
+                Avaliações</a>
+            <a href="index.html#arouca-geopark" class="text-left font-display text-4xl text-white italic hover:text-gold transition-colors">
+                AroucaGeopark</a>
+            <a href="index.html#contactos" class="text-left font-display text-4xl text-white italic hover:text-gold transition-colors">
+                Contactos</a>
+        </nav>
+    </div>
+
+    <main class="pt-32 pb-16 px-4 md:px-6">
+     <div class="max-w-7xl mx-auto text-center mb-16">
+         <span class="text-gold uppercase tracking-[0.4em] text-xs font-bold">A Nossa Tradição em Imagens</span>
+         <h2 class="font-display text-5xl md:text-6xl text-primary italic mt-4">Galeria de Delícias</h2>
+         <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+           
+             <div class="relative group overflow-hidden rounded-lg aspect-square shadow-md border border-gold/10">
+                <a href="foto1.jpg" data-lightbox="docaria">
+                    <img src="foto1.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Galeria">
+                    <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-3xl">zoom_in</span>
+                    </div>
+                </a>
+            </div>
+
+             <div class="relative group overflow-hidden rounded-lg aspect-square shadow-md border border-gold/10">
+                <a href="foto2.jpg" data-lightbox="docaria">
+                    <img src="foto2.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Galeria">
+                    <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-3xl">zoom_in</span>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="relative group overflow-hidden rounded-lg aspect-square shadow-md border border-gold/10">
+                <a href="foto3.jpg" data-lightbox="docaria">
+                    <img src="foto3.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Galeria">
+                    <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-3xl">zoom_in</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="relative group overflow-hidden rounded-lg aspect-square shadow-md border border-gold/10">
+                <a href="foto4.jpg" data-lightbox="docaria">
+                    <img src="foto4.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Galeria">
+                    <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-3xl">zoom_in</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="relative group overflow-hidden rounded-lg aspect-square shadow-md border border-gold/10">
+                <a href="foto5.jpg" data-lightbox="docaria">
+                    <img src="foto5.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Galeria">
+                    <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-3xl">zoom_in</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="relative group overflow-hidden rounded-lg aspect-square shadow-md border border-gold/10">
+                <a href="foto6.jpg" data-lightbox="docaria">
+                    <img src="foto6.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Galeria">
+                    <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-3xl">zoom_in</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="relative group overflow-hidden rounded-lg aspect-square shadow-md border border-gold/10">
+                <a href="foto7.jpg" data-lightbox="docaria">
+                    <img src="foto7.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Galeria">
+                    <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-3xl">zoom_in</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="relative group overflow-hidden rounded-lg aspect-square shadow-md border border-gold/10">
+                <a href="foto8.jpg" data-lightbox="docaria">
+                    <img src="foto8.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Galeria">
+                    <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-3xl">zoom_in</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="relative group overflow-hidden rounded-lg aspect-square shadow-md border border-gold/10">
+                <a href="foto9.jpeg" data-lightbox="docaria">
+                    <img src="foto9.jpeg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Galeria">
+                    <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-3xl">zoom_in</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="relative group overflow-hidden rounded-lg aspect-square shadow-md border border-gold/10">
+                <a href="foto10.jpg" data-lightbox="docaria">
+                    <img src="foto10.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Galeria">
+                    <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-3xl">zoom_in</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="relative group overflow-hidden rounded-lg aspect-square shadow-md border border-gold/10">
+                <a href="foto11.jpg" data-lightbox="docaria">
+                    <img src="foto11.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Galeria">
+                    <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-3xl">zoom_in</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="relative group overflow-hidden rounded-lg aspect-square shadow-md border border-gold/10">
+                <a href="foto12.jpg" data-lightbox="docaria">
+                    <img src="foto12.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Galeria">
+                    <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-3xl">zoom_in</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="relative group overflow-hidden rounded-lg aspect-square shadow-md border border-gold/10">
+                <a href="foto13.jpg" data-lightbox="docaria">
+                    <img src="foto13.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Galeria">
+                    <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-3xl">zoom_in</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="relative group overflow-hidden rounded-lg aspect-square shadow-md border border-gold/10">
+                <a href="foto14.jpg" data-lightbox="docaria">
+                    <img src="foto14.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Galeria">
+                    <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-3xl">zoom_in</span>
+                    </div>
+                </a>
+            </div>
+  
+            <div class="relative group overflow-hidden rounded-lg aspect-square shadow-md border border-gold/10">
+                <a href="foto15.jpg" data-lightbox="docaria">
+                    <img src="foto15.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Galeria">
+                    <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-3xl">zoom_in</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="relative group overflow-hidden rounded-lg aspect-square shadow-md border border-gold/10">
+                <a href="foto16.jpg" data-lightbox="docaria">
+                    <img src="foto16.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Galeria">
+                    <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-3xl">zoom_in</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="relative group overflow-hidden rounded-lg aspect-square shadow-md border border-gold/10">
+                <a href="foto17.jpg" data-lightbox="docaria">
+                    <img src="foto17.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Galeria">
+                    <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-3xl">zoom_in</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="relative group overflow-hidden rounded-lg aspect-square shadow-md border border-gold/10">
+                <a href="foto18.jpg" data-lightbox="docaria">
+                    <img src="foto18.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Galeria">
+                    <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-3xl">zoom_in</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="relative group overflow-hidden rounded-lg aspect-square shadow-md border border-gold/10">
+                <a href="foto19.jpg" data-lightbox="docaria">
+                    <img src="foto19.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Galeria">
+                    <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-3xl">zoom_in</span>
+                    </div>
+                </a>
+            </div>
+
+</div>
+    </main>
+
+
+    <div class="max-w-7xl mx-auto px-6 pb-16">
+        <div class="flex justify-center">
+            <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-primary bg-primary text-white font-bold uppercase tracking-[0.2em] hover:bg-gold hover:text-primary transition-colors">
+                <span>▲</span>
+                <span>Voltar ao Início</span>
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+    
+    <script>
+        // Configurações para ser ainda mais fácil de usar
+        lightbox.option({
+          'resizeDuration': 200,
+          'wrapAround': true,
+          'alwaysShowNavOnTouchDevices': true,
+          'disableScrolling': true
+        })
+    </script>
+
+</body>
+</html>
