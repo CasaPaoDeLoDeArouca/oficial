@@ -8,7 +8,6 @@
     <meta name="description" content="O autêntico Pão de Ló de Arouca húmido. Tradição secular desde 1840 em forno a lenha no Burgo.">
     <meta name="keywords" content="Pão de Ló de Arouca, Alberto Teixeira Pinto, Pão de Ló húmido, Doçaria Tradicional, Burgo Arouca, Pão de Ló de Arouca preço, O melhor Pão de Ló, doces regionais Arouca">
     <meta name="author" content="Alberto Teixeira Pinto & Filhos">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&family=Montserrat:wght@300;400;600&family=Material+Symbols+Outlined:wght@100..700&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -63,9 +62,10 @@
             if(target) {
                 const headerHeight = document.querySelector('header')?.offsetHeight || 0;
                 window.scrollTo({top: target.offsetTop - headerHeight, behavior: 'smooth'});
-            } else {
-                window.scrollTo({top: 0, behavior: 'smooth'});
             }
+
+            // Atualiza o URL sem disparar o evento hashchange novamente
+            history.pushState(null, null, id === 'home' ? ' ' : '#' + id);
         }
 
         // --- NAVEGAÇÃO ENTRE ABAS (DENTRO DA HOME) ---
@@ -75,7 +75,7 @@
             document.getElementById('home').classList.remove('hidden');
             
             // Ativa a aba específica
-            const btnRelativo = document.querySelector(`button[onclick*="'${tabId}'"]`);
+            const btnRelativo = document.querySelector(`.tab-btn[onclick*="${tabId}"]`);
             switchTab(tabId, btnRelativo);
             
             const nav = document.getElementById('side-nav');
@@ -103,11 +103,11 @@
             document.getElementById('tab-' + tabId).classList.remove('hidden');
             
             document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('text-gold', 'border-gold', 'font-bold');
+                btn.classList.remove('text-gold', 'border-gold', 'font-bold', 'bg-gold/10');
                 btn.classList.add('text-blue-900');
             });
             if(element) {
-                element.classList.add('text-gold', 'border-gold', 'font-bold');
+                element.classList.add('text-gold', 'border-gold', 'font-bold', 'bg-gold/10');
                 element.classList.remove('text-blue-900');
             }
 
@@ -120,7 +120,32 @@
             } else if (tabContainer) {
                 window.scrollTo({ top: tabContainer.offsetTop - headerHeight, behavior: 'smooth' });
             }
+            
+            // Atualiza o URL
+            history.pushState(null, null, '#' + tabId);
         }
+
+        // --- GESTOR DE ESTADO (HASH) ---
+        function handleNavigation() {
+            const hash = window.location.hash.replace('#', '');
+            const validTabs = ['quem-somos', 'insta', 'historia', 'produtos'];
+            const validPages = ['video', 'testemunhos', 'arouca-geopark', 'contactos'];
+
+            if (validTabs.includes(hash)) {
+                document.querySelectorAll('.page-section').forEach(p => p.classList.add('hidden'));
+                document.getElementById('home').classList.remove('hidden');
+                const btn = document.querySelector(`.tab-btn[onclick*="${hash}"]`);
+                switchTab(hash, btn);
+            } else if (validPages.includes(hash)) {
+                showPage(hash);
+            } else {
+                showPage('home');
+                switchTab('quem-somos', document.querySelector(`.tab-btn[onclick*="quem-somos"]`));
+            }
+        }
+
+        window.addEventListener('hashchange', handleNavigation);
+        window.addEventListener('load', handleNavigation);
 
         function scrollToSection(sectionId) {
             const section = document.getElementById(sectionId);
@@ -286,6 +311,8 @@ document.addEventListener("visibilitychange", () => {
             animation: scrollFilm 40s linear infinite;
         }
         .animate-film:hover { animation-play-state: paused; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 
 </head>
@@ -301,9 +328,9 @@ document.addEventListener("visibilitychange", () => {
                 <span class="text-[9px] uppercase tracking-[0.3em] font-bold hidden md:block">Menu</span>
             </button>
 
-            <div class="flex flex-col items-center justify-center gap-1 cursor-pointer text-center md:flex-row md:text-left md:gap-3" onclick="showPage('home')">
-                <img src="logotipo.jpg" class="w-8 h-8 md:w-12 md:h-12 rounded-full border-2 border-gold/50 object-cover">
-                <div class="flex flex-col items-center md:items-start">
+            <div class="flex flex-col items-center justify-center gap-1 text-center md:flex-row md:text-left md:gap-3">
+                <img src="logotipo.jpg" onclick="showPage('home')" class="w-8 h-8 md:w-12 md:h-12 rounded-full border-2 border-gold/50 object-cover cursor-pointer">
+                <div class="flex flex-col items-center md:items-start cursor-pointer" onclick="showPage('home')">
                     <h1 class="font-display italic text-white text-sm md:text-2xl leading-tight tracking-tight">Alberto Teixeira Pinto & Filhos</h1>
                     <span class="text-[7px] md:text-[9px] uppercase tracking-[0.3em] text-gold-light font-bold">Arouca • 1840</span>
                 </div>
@@ -355,7 +382,7 @@ document.addEventListener("visibilitychange", () => {
         </nav>
     </div>
 
-    <main class="pt-12 md:pt-16">
+    <main class="pt-20 md:pt-24">
         
         <section id="home" class="page-section">
             <div class="h-[55vh] md:h-[65vh] relative flex items-start justify-center overflow-hidden">
@@ -381,15 +408,15 @@ document.addEventListener("visibilitychange", () => {
             </div>
 
             <div id="tab-container-anchor"></div>
-            <div class="sticky top-12 md:top-16 z-50 bg-surface/90 backdrop-blur-md border-b border-gold/10">
-                <div class="flex justify-center gap-8 md:gap-16 py-6 overflow-x-auto px-4">
-                    <button onclick="switchTab('quem-somos', this)" class="tab-btn text-[10px] uppercase tracking-[0.3em] font-bold text-blue-900 border-gold pb-1 whitespace-nowrap transition-all duration-200 hover:transform hover:-translate-y-1 hover:shadow-lg" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
+            <div class="sticky top-[68px] md:top-[80px] z-50 bg-surface/95 backdrop-blur-lg border-b-2 border-gold/20 shadow-md">
+                <div class="flex flex-nowrap justify-start md:justify-center gap-6 md:gap-16 py-5 overflow-x-auto px-6 hide-scrollbar touch-pan-x">
+                    <button onclick="switchTab('quem-somos', this)" class="tab-btn shrink-0 text-[11px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em] font-bold text-gold border-gold bg-gold/10 px-4 py-1.5 rounded-full whitespace-nowrap transition-all duration-200 hover:transform hover:-translate-y-1 hover:shadow-lg" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
                         Quem Somos</button>
-                    <button onclick="switchTab('insta', this)" class="tab-btn text-[10px] uppercase tracking-[0.3em] font-bold text-blue-900 pb-1 whitespace-nowrap transition-all duration-200 hover:transform hover:-translate-y-1 hover:shadow-lg" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
+                    <button onclick="switchTab('insta', this)" class="tab-btn shrink-0 text-[11px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em] font-bold text-blue-900 px-4 py-1.5 rounded-full whitespace-nowrap transition-all duration-200 hover:transform hover:-translate-y-1 hover:shadow-lg" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
                         Instalações</button>
-                    <button onclick="switchTab('historia', this)" class="tab-btn text-[10px] uppercase tracking-[0.3em] font-bold text-blue-900 pb-1 whitespace-nowrap transition-all duration-200 hover:transform hover:-translate-y-1 hover:shadow-lg" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
+                    <button onclick="switchTab('historia', this)" class="tab-btn shrink-0 text-[11px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em] font-bold text-blue-900 px-4 py-1.5 rounded-full whitespace-nowrap transition-all duration-200 hover:transform hover:-translate-y-1 hover:shadow-lg" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
                         História</button>
-                    <button onclick="switchTab('produtos', this)" class="tab-btn text-[10px] uppercase tracking-[0.3em] font-bold text-blue-900 pb-1 whitespace-nowrap transition-all duration-200 hover:transform hover:-translate-y-1 hover:shadow-lg" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
+                    <button onclick="switchTab('produtos', this)" class="tab-btn shrink-0 text-[11px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em] font-bold text-blue-900 px-4 py-1.5 rounded-full whitespace-nowrap transition-all duration-200 hover:transform hover:-translate-y-1 hover:shadow-lg" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
                         Produtos</button>
                 </div>
             </div>
@@ -412,7 +439,7 @@ document.addEventListener("visibilitychange", () => {
                     Na nossa casa, cada detalhe conta.
                     Aqui, a autenticidade vive-se na receita que é preparada com o coração. O sabor que se encontra à mesa não é apenas um simples Pão de Ló — é <strong>memória</strong>, 
                     é afeto, é aquela sensação de "quero mais".                  
-                    Carregamos história em cada fatia, feita de gerações que respeitam a tradição, sem nunca esquecer o toque especial que nos torna únicos.
+                    Carregamos história em cada fatia, sem nunca esquecer o toque especial que nos torna únicos.
                     <br>
                     <br>
                     "Somos uma família que atravessa gerações, guardando no coração de Arouca a arte solene de criar doçaria artesanal com o rigor do passado e o amor do presente."
@@ -675,9 +702,9 @@ document.addEventListener("visibilitychange", () => {
                             </button>
 
                             <p id="texto-extra-leitura" class="font-display text-2xl italic text-secondary leading-relaxed">
-                                "Em 1840, a <strong > Família Teixeira Pinto </strong > assumiu esta missão solene de preservar esta joia Gastronómica transformando-a em patrimônio público.
-                                Utilizamos até hoje as mesmas técnicas de batimento vigoroso, mas melhoradas, e os ovos de pureza garantida que fazem deste doce o presente predileto para a nobreza e o clero que visitava o Burgo.
-                                Mais de 180 anos depois, cada fornada cozida nos fornos a lenha é uma homenagem aos que vieram antes de nós, assada lentamente onde a alma e textura é impossível de replicar industrialmente, nos tornando inconfundíveis."
+                                "Em 1840, a <strong > Família Teixeira Pinto </strong > assumiu esta missão solene de preservar esta joia Gastronómica transformando-a em património público.
+                                Utilizamos até hoje as mesmas técnicas de batimento vigoroso, mas melhoradas, e os ovos de pureza garantida que fazem deste doce um presente predileto.
+                                Mais de 180 anos depois, cada fornada cozida nos fornos a lenha é uma homenagem aos que vieram antes de nós, assada lentamente traduzindo-se num sabor inconfundível."
                             </p>
                         </div>
                     </div>
@@ -718,7 +745,7 @@ document.addEventListener("visibilitychange", () => {
               <div class="relative bg-surface p-10 rounded-2xl shadow-[0_15px_40px_rgba(0,0,0,0.06)] border-l-[8px] border-primary flex flex-col items-center text-center group">
                  <span class="text-5xl text-gold/20 font-serif mb-2">"</span>
                  <p id="citacao-2" class="font-display text-2xl md:text-3xl italic text-primary leading-tight px-4">
-                 "No Pão de Ló de Arouca, o ingrediente secreto será sempre o tempo."
+                 "O Pão de Ló de Arouca, destaca-se pela sua suculência."
                  </p>
                 <button onclick="toggleSpeak('citacao-2', this)" class="mt-4 text-gold opacity-50 group-hover:opacity-100 transition-opacity">
                  <span class="material-symbols-outlined icone-voz">volume_up</span>
@@ -963,7 +990,7 @@ document.addEventListener("visibilitychange", () => {
             </div>
         </section>
 
-        <section id="testemunhos" class="page-section hidden hero-gradient text-center px-6 px-6 pt-32 pb-20">
+        <section id="testemunhos" class="page-section hidden hero-gradient text-center px-6 pt-32 pb-20">
             <div class="absolute top-10 left-10 text-gray-200 font-serif text-[20rem] leading-none select-none pointer-events-none">“</div>
     
     <div class="max-w-7xl mx-auto px-6 relative z-10">
@@ -1271,7 +1298,7 @@ document.addEventListener("visibilitychange", () => {
                     <span class="text-white/40">|</span>
                     <a href="cookies.html" class="hover:text-gold transition-colors">Cookies</a>
                     <span class="text-white/40">|</span>
-                    <a href="#" class="hover:text-gold transition-colors">Livro de Reclamações</a>
+                    <a href="https://www.livroreclamacoes.pt/" class="hover:text-gold transition-colors">Livro de Reclamações</a>
                 </div>
             </div>
             <div class="flex flex-col items-center md:items-end gap-3">
